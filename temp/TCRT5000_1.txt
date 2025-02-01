@@ -1,0 +1,30 @@
+아래는 라인트레이서 TCRT500 센서를 라즈베리 파이의 BCM 11번 핀에 연결하여 값을 읽어오고 출력하는 간단한 파이썬 코드입니다.
+
+```python
+import RPi.GPIO as GPIO
+
+# BCM 핀 번호 설정
+sensor_pin = 11
+
+# GPIO 모드 설정
+GPIO.setmode(GPIO.BCM)
+
+# 센서 핀 입력 설정
+GPIO.setup(sensor_pin, GPIO.IN)
+
+try:
+    while True:
+        # 센서 값 읽어오기
+        sensor_value = GPIO.input(sensor_pin)
+        
+        # 값 출력
+        print("센서 값: {}".format(sensor_value))
+        
+except KeyboardInterrupt:
+    pass
+
+# GPIO 리셋
+GPIO.cleanup()
+```
+
+위의 코드를 라즈베리 파이에 저장한 후 실행하면, 센서의 값을 읽어와서 출력합니다. 센서 값이 0 또는 1로 표시되며, 0은 센서가 물체를 감지하지 않았음을 의미하고, 1은 센서가 물체를 감지했음을 의미합니다. 코드를 실행하기 전에 `RPi.GPIO` 라이브러리가 설치되어 있는지 확인해야 합니다. 설치되어 있지 않다면 `pip install RPi.GPIO` 명령을 사용하여 설치할 수 있습니다.
