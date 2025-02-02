@@ -1,10 +1,10 @@
 from gpiozero import Motor
 from time import sleep
 
-motor = Motor(21, 20)       # right_front 1    OK
-#motor = Motor(19, 26)       # right_rear 2     ok
-#motor = Motor(24, 23)       # left_front 3     ok
-#motor = Motor(27, 22)       # left_rear 4      ok
+#motor = Motor(21, 20)       # right_front 1    ok
+#motor = Motor(26, 19)       # right_rear 2     ok
+#motor = Motor(23, 24)       # left_front 3     ok
+#motor = Motor(22, 27)       # left_rear 4      ok
 
 try:
     while True:
