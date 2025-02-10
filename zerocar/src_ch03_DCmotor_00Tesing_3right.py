@@ -1,13 +1,13 @@
 from gpiozero import Motor, Robot
 from time import sleep
 
-#motor = Motor(21, 20)       # right_front 1    ok
-#motor = Motor(26, 19)       # right_rear 2     ok
-#motor = Motor(23, 24)       # left_front 3     ok
-#motor = Motor(22, 27)       # left_rear 4      ok
+#motor = Motor(26, 19)       # right_front 1    ok
+#motor = Motor(27, 22)       # right_rear 2     ok
+#motor = Motor(21, 20)       # left_front 3     ok
+#motor = Motor(24, 23)       # left_rear 4      ok
 
-rightWheel = Robot(Motor(21, 20), Motor(26, 19))
-leftWheel = Robot(Motor(23, 24), Motor(22, 27))
+rightWheel = Robot(Motor(26, 19), Motor(27, 22))
+leftWheel = Robot(Motor(21, 20), Motor(24, 23))
 
 
 try:

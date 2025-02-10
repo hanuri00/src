@@ -1,12 +1,9 @@
 #-*- coding: utf-8 -*-
 # update 20250202
 
-from gpiozero import Robot, Motor
+from zeroCar import rightWheel, leftWheel
 from time import sleep
-import keyboard  # keyboard 라이브러리 임포트
-
-rightWheel = Robot(Motor(21, 20), Motor(26, 19))
-leftWheel = Robot(Motor(23, 24), Motor(22, 27))
+import keyboard     # keyboard 라이브러리 임포트
 
 def move_wheels(left_speed, right_speed, duration=None): # 중복 코드 제거
     leftWheel.forward(speed=left_speed) if left_speed > 0 else leftWheel.backward(speed=abs(left_speed))

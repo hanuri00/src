@@ -1,9 +1,12 @@
-#-*- coding: utf-8 -*-
-# update 20250202
+# -*- coding: utf-8 -*-
+# update : {current_date}
 
 from zeroCar import rightWheel, leftWheel
 from time import sleep
+from datetime import datetime
 import curses
+
+current_date = datetime.now().strftime("%Y%m%d")
 
 def move_wheels(left_speed, right_speed, duration=None):
     leftWheel.forward(speed=left_speed) if left_speed > 0 else leftWheel.backward(speed=abs(left_speed))
@@ -25,28 +28,31 @@ def turn_right(speed, duration=None):
     move_wheels(speed, -speed, duration)
 
 def go_left(speed, duration=None):
-    move_wheels(speed*0.7, speed, duration)
+    move_wheels(speed * 0.7, speed, duration)
 
 def go_right(speed, duration=None):
-    move_wheels(speed, speed*0.7, duration)
+    move_wheels(speed, speed * 0.7, duration)
 
 def stop():
     leftWheel.stop()
     rightWheel.stop()
 
 def main(window):
+    curses.cbreak()
+    window.keypad(True)
     window.nodelay(True)
 
     while True:
         key = window.getch()
 
         if key == ord('w'):
-            if window.getch() == ord('a'):  # w와 a가 동시에 눌렸는지 확인
+            next_key = window.getch()
+            if next_key == ord('a'):
                 go_left(1)
-            elif window.getch() == ord('d'):  # w와 d가 동시에 눌렸는지 확인
+            elif next_key == ord('d'):
                 go_right(1)
             else:
-                go(1)  # w만 눌렸을 경우
+                go(1)
         elif key == ord('s'):
             back(1)
         elif key == ord('a'):
@@ -60,4 +66,5 @@ def main(window):
 
         sleep(0.1)
 
-curses.wrapper(main)
+if __name__ == "__main__":
+    curses.wrapper(main)
