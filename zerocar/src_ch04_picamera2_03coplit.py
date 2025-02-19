@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 # update : {current_date}
 
-from zeroCar import rightWheel, leftWheel
-from time import sleep
-from datetime import datetime
-import curses
-from picamera2 import Picamera2
-import os
+try:
+    from zeroCar import rightWheel, leftWheel
+    from time import sleep
+    from datetime import datetime
+    import curses
+    from picamera2 import Picamera2
+    import os
+except ImportError as e:
+    print(f"Error importing libraries: {e}")
+    exit(1)
 
 current_date = datetime.now().strftime("%Y%m%d")
 
@@ -16,8 +20,13 @@ os.makedirs(image_dir, exist_ok=True)
 cam = Picamera2()
 
 def move_wheels(left_speed, right_speed, duration=None):
+    if not (-1 <= left_speed <= 1) or not (-1 <= right_speed <= 1):
+        print("Speed should be between -1 and 1")
+        return
+
     leftWheel.forward(speed=left_speed) if left_speed > 0 else leftWheel.backward(speed=abs(left_speed))
     rightWheel.forward(speed=right_speed) if right_speed > 0 else rightWheel.backward(speed=abs(right_speed))
+
     if duration:
         sleep(duration)
         stop()
@@ -52,11 +61,14 @@ def stop():
 
 def capture_image(label):
     try:
+        cam.start()
         image_path = os.path.join(image_dir, f'lane_image_{datetime.now().strftime("%Y%m%d_%H%M%S")}_{label}.jpg')
-        cam.capture(image_path)
+        cam.capture_file(image_path)
         print(f"Image captured: {image_path}")
     except Exception as e:
         print(f"Error capturing image: {e}")
+    finally:
+        cam.stop()
 
 def main(window):
     cam.start()
